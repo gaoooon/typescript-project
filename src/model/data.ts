@@ -1,4 +1,4 @@
-export interface city {
+export interface City {
   [city: string]: {
     name: string;
     latitude: number;
@@ -6,8 +6,12 @@ export interface city {
   };
 }
 
-export interface weather {
+export interface WeatherForm {
   city: string;
   weather: string;
   temp: number;
+}
+
+export interface WeatherType {
+  [weather: string]: string;
 }
