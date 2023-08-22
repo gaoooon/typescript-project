@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Input from "./Input/index";
-import Weather from "./Weather/index";
+import Input from "./components/Input/index";
+import Weather from "./components/Weather/index";
 import { WeatherForm } from "./model/data";
-import { GlobalStyle } from "./resetCss";
-import { Style } from "./style";
+import { GlobalStyle } from "./style/resetCss";
+import { Style } from "./style/style";
 
 const App: React.FC = () => {
   //함수형 컴포넌트타입으로 지정해줌

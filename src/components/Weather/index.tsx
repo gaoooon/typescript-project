@@ -1,4 +1,4 @@
-import { WeatherForm, WeatherType } from "../model/data";
+import { WeatherForm, WeatherType } from "../../model/data";
 import { WeatherContainer } from "./style";
 
 const weatherTypes: WeatherType = {

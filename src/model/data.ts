@@ -15,3 +15,9 @@ export interface WeatherForm {
 export interface WeatherType {
   [weather: string]: string;
 }
+
+export interface LocationType {
+  name: string;
+  latitude: number;
+  longitude: number;
+}

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { City, WeatherForm } from "../model/data";
+import { City, WeatherForm, LocationType } from "../../model/data";
 import { InputContainer } from "./style";
 
-const API_KEY = "848ba02eb6c70e2710754c299271f149";
+const API_KEY = process.env.REACT_APP_API_KEY;
 
 const cities: City = {
   서울: { name: "서울", latitude: 37.5665, longitude: 126.978 },
@@ -42,7 +42,7 @@ interface props {
 
 const Input: React.FC<props> = ({ setter }) => {
   const [inputValue, setInputValue] = useState<string>("");
-  const [locationData, setLocationData] = useState({
+  const [locationData, setLocationData] = useState<LocationType>({
     name: "",
     latitude: 0,
     longitude: 0,
