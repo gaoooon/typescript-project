@@ -12,12 +12,13 @@ const App: React.FC = () => {
     weather: "",
     temp: 0,
   });
+
   return (
     <>
       <Style />
       <GlobalStyle />
       <div>
-        <Input setter={setCityWeather} />
+        <Input setCityWeather={setCityWeather} />
         <Weather cityWeather={cityWeather} />
       </div>
     </>
