@@ -10,19 +10,16 @@ export const InputContainer = styled.div`
   }
 
   margin: 4rem auto 5rem auto;
-  /* width: 354.336px; */
 
   text-align: center;
 
   form {
     border-radius: 30px 30px 30px 30px;
-    box-shadow: 0px 0px 5px 3px rgb(1, 1, 1, 0.5);
-    border: 3px solid #749bc2;
-    /* width: 354.336px; */
+    border: 5px solid #749bc2;
 
     input {
       // 입력창
-      padding: 15px 30px;
+      padding: 15px 40px;
       border-radius: 30px 0px 0px 30px;
       font-size: larger;
       border: 0;
@@ -33,7 +30,7 @@ export const InputContainer = styled.div`
       border-radius: 0px 30px 30px 0px;
       font-size: larger;
       cursor: pointer;
-      border-left: 3px solid #749bc2;
+      border-left: 5px solid #749bc2;
       border-bottom: 0;
       border-right: 0;
       border-top: 0;

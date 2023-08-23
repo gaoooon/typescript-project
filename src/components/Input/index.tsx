@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { City, WeatherForm, LocationType } from "../../model/data";
 import { InputContainer } from "./style";
+import axios from "axios";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 
@@ -36,11 +37,13 @@ const cities: City = {
   경주: { name: "경주", latitude: 35.8562, longitude: 129.2242 },
 };
 
-interface props {
-  setter: React.Dispatch<React.SetStateAction<WeatherForm>>;
+// type, interface 항상 "PascalCase" camelCase x 둘 차이는 시작이 대문자냐 소문자냐
+interface Props {
+  // prop naming 아쉬움 setState prop으로 받는거면 걍 setXXXXX 이런식으로 받아오는게 더 읽기도 사용하기도 좋다.
+  setCityWeather: React.Dispatch<React.SetStateAction<WeatherForm>>;
 }
 
-const Input: React.FC<props> = ({ setter }) => {
+const Input: React.FC<Props> = ({ setCityWeather }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [locationData, setLocationData] = useState<LocationType>({
     name: "",
@@ -48,43 +51,52 @@ const Input: React.FC<props> = ({ setter }) => {
     longitude: 0,
   });
 
-  const inputChnage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // 오타 에바
+  const inputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
   const formSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const cityName = (
-      (e.target as HTMLFormElement).firstChild as HTMLFormElement
-    ).value;
-    if (cities[cityName] !== undefined) {
+    const cityName = inputRef?.current?.value ?? "";
+
+    if (cities[cityName]) {
       setLocationData(cities[cityName]);
     } else {
-      alert("개발되지 않은 지역");
+      alert("개발 중 입니다...(죄...죄송합니다)");
       setInputValue("");
     }
   };
 
-  const fetchWeather = () => {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?lat=${locationData.latitude}&lon=${locationData.longitude}&appid=${API_KEY}&units=metric`
-    )
-      .then((response: any) => response.json())
-      .then((data: any) => {
-        console.log(data);
-        const weatherType = {
-          city: locationData.name,
-          weather: data.weather[0].main,
-          temp: data.main.temp,
-        };
-        setter(weatherType);
-        setInputValue("");
-      });
+  // async await , try ... catch 사용 해보기     수정했습니다!!
+  // fetch 써봤으니 axios도 사용해보기           수정했습니다!!
+  const axiosWeather = async () => {
+    try {
+      const response = await axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${locationData.latitude}&lon=${locationData.longitude}&appid=${API_KEY}&units=metric`
+      );
+      const data = response.data;
+      console.log(data);
+      const weatherType = {
+        city: locationData.name,
+        weather: data.weather[0].main,
+        temp: data.main.temp,
+      };
+      setCityWeather(weatherType);
+      setInputValue("");
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   useEffect(() => {
-    if (locationData.name !== "") {
-      fetchWeather();
+    // "" 빈문자열은 falsy 값이라 조건을 통과하지 못할 것 같은데 확신할 순 없고 테스트 해볼게 잠만
+    // 따라서 !== 제거해도 의도한대로 동작한다. 알려주셔서 감사합니다
+    // falsy, truthy 값 예시들 찾아봐
+    if (locationData.name) {
+      axiosWeather();
     }
   }, [locationData]);
 
@@ -95,7 +107,8 @@ const Input: React.FC<props> = ({ setter }) => {
           placeholder="원하는 지역을 입력하세요"
           type="text"
           value={inputValue}
-          onChange={inputChnage}
+          onChange={inputChange}
+          ref={inputRef}
         />
         <button>click!</button>
       </form>
