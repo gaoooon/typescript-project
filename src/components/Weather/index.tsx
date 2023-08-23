@@ -1,4 +1,6 @@
-import { WeatherForm, WeatherType } from "../../model/data";
+// 현재 tsconfig에서 설정해두어 절대경로로 다른 모듈 import 가능합니다
+
+import { WeatherForm, WeatherType } from "model/data";
 import { WeatherContainer } from "./style";
 
 const weatherTypes: WeatherType = {
@@ -22,21 +24,21 @@ const weatherTypes: WeatherType = {
   Tornado: "토네이도",
 };
 
-interface props {
+// PascalCase
+interface Props {
   cityWeather: WeatherForm;
 }
 
-const Weather: React.FC<props> = ({ cityWeather }) => {
-  console.log(cityWeather.weather);
+const Weather: React.FC<Props> = ({ cityWeather }) => {
   return (
     <>
-      {cityWeather.temp !== 0 ? (
+      {cityWeather.temp !== 0 && (
         <WeatherContainer>
-          <div>지역:{cityWeather.city}</div>{" "}
+          <div>지역:{cityWeather.city}</div>
           <div>날씨:{weatherTypes[cityWeather.weather]}</div>
-          <div>온도:{cityWeather.temp}</div>
+          <div>온도:{cityWeather.temp}도</div>
         </WeatherContainer>
-      ) : null}
+      )}
     </>
   );
 };

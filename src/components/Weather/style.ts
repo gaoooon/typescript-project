@@ -15,20 +15,13 @@ export const WeatherContainer = styled.div`
   font-family: "HakgyoansimBareondotumB";
   text-align: center;
   padding: 30px 90px;
-  box-shadow: 0px 0px 5px 3px rgb(1, 1, 1, 0.5);
+  border: 5px solid #749bc2;
 
   div {
-    background-color: #91c8e4;
+    border: 5px solid #91c8e4;
     padding: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
     border-radius: 20px;
   }
 `;
-
-//@font-face {
-//     font-family: 'PuradakGentleGothicR';
-//     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.1/PuradakGentleGothicR.woff2') format('woff2');
-//     font-weight: normal;
-//     font-style: normal;
-// }
